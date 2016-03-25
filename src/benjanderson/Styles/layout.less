@@ -1,0 +1,62 @@
+﻿html, body, .Override.container {
+	height: 100%;
+}
+
+
+.sidebar{
+	min-height:200pt;
+	background-color: #2D3339;
+	color:#fff;
+}
+
+.Override {
+		*:before, *:after {
+			display: none;
+		}
+		.fill {
+			position: relative;
+		}
+
+		.fill:after {
+			content: '';
+			display: block;
+			clear: left;
+		}
+
+		.wrapper {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+
+		&.container {
+			width: 100%;
+		}
+}
+
+
+
+@media (min-width: 1000px) {
+	.Override {
+		.col-md-3 {
+			height: 100%;
+			float: left;
+			position: static;
+		}
+
+		.col-md-9 {
+			height: 100%;
+			position: static;
+			overflow: auto;
+		}
+
+		
+	}
+
+	.Override.container:before {
+		content: '';
+		display: block;
+		float: left;
+		height: 100%;
+	}
+}

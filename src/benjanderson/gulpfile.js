@@ -17,9 +17,10 @@ var config = {
 	webroot: "./wwwroot/",
 	jsDeploy: "./wwwroot/js/",
 	cssDeploy: "./wwwroot/css/",
-	js: "./Scripts/**/*.js",
-	jsRoot: "./Scripts/app.js",
-	lessRoot: "./Styles/site.less"
+	js: ["./Scripts/**/*.js", "./Scripts/**/*.jsx"],
+	jsRoot: "./Scripts/app.jsx",
+	lessRoot: "./Styles/site.less",
+	less: "./Styles/**/*.less"
 };
 
 function swallowError(error) {
@@ -29,9 +30,9 @@ function swallowError(error) {
 
 gulp.task("css", function () {
 	return gulp.src(config.lessRoot)
-		.pipe(gulpIf(!config.release, sourcemaps.init()))
+		.pipe(sourcemaps.init())
 		.pipe(less())
-		.pipe(gulpIf(!config.release, sourcemaps.write()))
+		.pipe(sourcemaps.write())
 		.on('error', swallowError)
 		.pipe(cssmin())
 		.pipe(gulp.dest(config.cssDeploy));
@@ -52,6 +53,6 @@ gulp.task("js", function () {
 gulp.task("default", ["css", "js"], function() {
 	if (!config.release) {
 		gulp.watch(config.js, ["js"]);
-		gulp.watch(config.lessRoot, ["css"]);
+		gulp.watch(config.less, ["css"]);
 	}
 });
