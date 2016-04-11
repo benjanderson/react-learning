@@ -1,24 +1,27 @@
 ﻿"use strict";
 
-var gulp = require("gulp");
-var rimraf = require("rimraf");
-var concat = require("gulp-concat");
-var cssmin = require("gulp-cssmin");
-var uglify = require("gulp-uglify");
-var source = require("vinyl-source-stream");
-var browserify = require("browserify");
-var babelify = require("babelify");
-var gulpIf = require("gulp-if");
-var sourcemaps = require('gulp-sourcemaps');
-var less = require("gulp-less");
+const gulp = require("gulp");
+const rimraf = require("rimraf");
+const concat = require("gulp-concat");
+const cssmin = require("gulp-cssmin");
+const uglify = require("gulp-uglify");
+const source = require("vinyl-source-stream");
+const browserify = require("browserify");
+//const babelify = require("babelify");
+const gulpIf = require("gulp-if");
+const sourcemaps = require('gulp-sourcemaps');
+const less = require("gulp-less");
+const tsify = require("tsify");
+const tsConfig = require('./tsconfig.json');
+const typings = require("typings");
 
 var config = {
 	release: process.env.NODE_ENV && process.env.NODE_ENV === 'Release',
 	webroot: "./wwwroot/",
 	jsDeploy: "./wwwroot/js/",
 	cssDeploy: "./wwwroot/css/",
-	js: ["./Scripts/**/*.js", "./Scripts/**/*.jsx"],
-	jsRoot: "./Scripts/app.jsx",
+	js: ["./Scripts/**/*.js", "./Scripts/**/*.tsx"],
+	jsRoot: "./Scripts/app.tsx",
 	lessRoot: "./Styles/site.less",
 	less: "./Styles/**/*.less"
 };
@@ -39,18 +42,19 @@ gulp.task("css", function () {
 });
 
 gulp.task("js", function () {
-	browserify(config.jsRoot).transform(babelify.configure({
-		presets: ["es2015", "react"]
-	}))
+	browserify(config.jsRoot)
+  .add("./typings/main/ambient/react/index.d.ts")
+  .add("./typings/main/ambient/react-dom/index.d.ts")
+	.plugin(tsify)
 	.bundle()
 	.on("error", function (err) { console.log("Error : " + err.message); })
 	.pipe(source('site.js'))
-	.pipe(gulp.dest(config.jsDeploy));	
+	.pipe(gulp.dest(config.jsDeploy));
 });
 
 
 
-gulp.task("default", ["css", "js"], function() {
+gulp.task("default", ["css", "js", "typings"], function () {
 	if (!config.release) {
 		gulp.watch(config.js, ["js"]);
 		gulp.watch(config.less, ["css"]);

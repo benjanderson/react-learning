@@ -20,6 +20,8 @@
         "babel-preset-react": "^6.5.0",
         "react": "^0.14.7",
         "react-dom": "^0.14.7",
-        "react-router": "^2.0.1"
+        "react-router": "^2.0.1",
+        "tsify": "^0.14.2",
+        "typings": "^0.7.12"
     }
 }
