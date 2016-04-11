@@ -6,19 +6,19 @@ namespace Benjanderson {
 	var array = ["a", "b", "c"];
 
 	var Layout = React.createClass({
-		render: function () {
+		render() {
 			return (
 				<div className="row fill">
 					<div className="wrapper">
 						<div className="col-md-3 col-sm-12 sidebar">
 							{array.map((x, i) =>
 								<p key={i + 1000}>sidebar</p>
-							) }
+							)}
 						</div>
 						<div className="col-md-9 col-sm-12">
 							{array.map((x, i) =>
 								<p key={i}>weehoo</p>
-							) }
+							)}
 						</div>
 					</div>
 				</div>

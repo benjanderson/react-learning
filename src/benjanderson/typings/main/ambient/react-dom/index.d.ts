@@ -11,9 +11,14 @@ declare namespace __React {
         function findDOMNode<E extends Element>(instance: ReactInstance): E;
         function findDOMNode(instance: ReactInstance): Element;
 
-        function render<P extends DOMAttributes, T extends Element>(
-            element: DOMElement<P, T>,
-            container: Element,
+	    function render<P extends DOMAttributes, T extends Element>(
+		    element: DOMElement<P, T>,
+		    container: Element,
+		    callback?: (element: T) => any): T;
+	    function render(element: JSX.Element, container: HTMLElement);
+	    function render<P extends DOMAttributes, T extends Element>(
+            element: any,
+            container: Element | HTMLElement,
             callback?: (element: T) => any): T;
         function render<P>(
             element: SFCElement<P>,
