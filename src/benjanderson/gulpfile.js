@@ -54,7 +54,7 @@ gulp.task("js", function () {
 
 
 
-gulp.task("default", ["css", "js", "typings"], function () {
+gulp.task("default", ["css", "js"], function () {
 	if (!config.release) {
 		gulp.watch(config.js, ["js"]);
 		gulp.watch(config.less, ["css"]);

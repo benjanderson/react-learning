@@ -4,16 +4,22 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var Benjanderson;
 (function (Benjanderson) {
-    var array = ["a", "b", "c"];
-    var Layout = React.createClass({
-        render: function () {
-            return (React.createElement("div", {className: "row fill"}, React.createElement("div", {className: "wrapper"}, React.createElement("div", {className: "col-md-3 col-sm-12 sidebar"}, array.map(function (x, i) {
-                return React.createElement("p", {key: i + 1000}, "sidebar");
-            })), React.createElement("div", {className: "col-md-9 col-sm-12"}, array.map(function (x, i) {
-                return React.createElement("p", {key: i}, "weehoo");
-            })))));
+    var array = ["aligator", "bear", "cat"];
+    var LayoutElement = (function () {
+        function LayoutElement() {
+            this.render = this.render;
         }
-    });
+        LayoutElement.prototype.render = function () {
+            return (React.createElement("div", {className: "row fill"}, React.createElement("div", {className: "wrapper"}, React.createElement("div", {className: "col-md-3 col-sm-12 sidebar"}, array.map(function (x, i) {
+                return React.createElement("p", {key: i + 1000}, x, " foo");
+            })), React.createElement("div", {className: "col-md-9 col-sm-12"}, array.map(function (x, i) {
+                return React.createElement("p", {key: i}, x);
+            })))));
+        };
+        return LayoutElement;
+    }());
+    Benjanderson.LayoutElement = LayoutElement;
+    var Layout = React.createClass(new LayoutElement());
     ReactDOM.render(React.createElement(Layout, null), document.getElementById('content'));
 })(Benjanderson || (Benjanderson = {}));
 },{"react":159,"react-dom":3}],2:[function(require,module,exports){
